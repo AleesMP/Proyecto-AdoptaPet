@@ -12,11 +12,11 @@ import java.awt.Font;
 
 public class Login {
 
-	private JFrame frmAdodptapet;
-	private JTextField textField;
-	private JTextField textField_1;
+	public JFrame frmLogin;
+	private JTextField txtUsuario;
+	private JTextField txtContraseña;
 	private JButton btnRegistrarse;
-	private JLabel lblNewLabel;
+	private JLabel lblRegistrarse;
 
 	/**
 	 * Launch the application.
@@ -26,7 +26,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.frmAdodptapet.setVisible(true);
+					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,12 +45,11 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmAdodptapet = new JFrame();
-		frmAdodptapet.getContentPane().setBackground(new Color(0, 204, 255));
-		frmAdodptapet.setTitle("AdodptaPet");
-		frmAdodptapet.setBounds(100, 100, 650, 400);
-		frmAdodptapet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAdodptapet.getContentPane().setLayout(null);
+		frmLogin = new JFrame();
+		frmLogin.getContentPane().setBackground(new Color(0, 204, 255));
+		frmLogin.setTitle("AdodptaPet");
+		frmLogin.setBounds(100, 100, 650, 400);
+		frmLogin.getContentPane().setLayout(null);
 		
 		JButton btnIniciarSesion = new JButton("Iniciar sesion");
 		btnIniciarSesion.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
@@ -58,47 +57,47 @@ public class Login {
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				VentanaPrincipal iniciarSesion = new VentanaPrincipal();
-				iniciarSesion.frame.setVisible(true);
+				iniciarSesion.frmAdoptapet.setVisible(true);
 			}
 		});
 		btnIniciarSesion.setBounds(274, 197, 135, 27);
-		frmAdodptapet.getContentPane().add(btnIniciarSesion);
+		frmLogin.getContentPane().add(btnIniciarSesion);
 		
-		textField = new JTextField();
-		textField.setBounds(240, 97, 203, 21);
-		frmAdodptapet.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtUsuario = new JTextField();
+		txtUsuario.setBounds(240, 97, 203, 21);
+		frmLogin.getContentPane().add(txtUsuario);
+		txtUsuario.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(240, 148, 203, 21);
-		frmAdodptapet.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		txtContraseña = new JTextField();
+		txtContraseña.setBounds(240, 148, 203, 21);
+		frmLogin.getContentPane().add(txtContraseña);
+		txtContraseña.setColumns(10);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblUsuario.setBounds(163, 99, 59, 17);
-		frmAdodptapet.getContentPane().add(lblUsuario);
+		frmLogin.getContentPane().add(lblUsuario);
 		
-		JLabel lblContrasea = new JLabel("Contraseña:");
-		lblContrasea.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblContrasea.setBounds(139, 150, 83, 17);
-		frmAdodptapet.getContentPane().add(lblContrasea);
+		JLabel lblContrasena = new JLabel("Contraseña:");
+		lblContrasena.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		lblContrasena.setBounds(139, 150, 83, 17);
+		frmLogin.getContentPane().add(lblContrasena);
 		
 		btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RegistroUsuario crearUsuario = new RegistroUsuario();
-				crearUsuario.frame.setVisible(true);
+				crearUsuario.frmRegistrarse.setVisible(true);
 			}
 		});
 		btnRegistrarse.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		btnRegistrarse.setBackground(Color.WHITE);
 		btnRegistrarse.setBounds(496, 328, 134, 27);
-		frmAdodptapet.getContentPane().add(btnRegistrarse);
+		frmLogin.getContentPane().add(btnRegistrarse);
 		
-		lblNewLabel = new JLabel("¿No tienes cuenta? Registrate");
-		lblNewLabel.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblNewLabel.setBounds(274, 333, 216, 17);
-		frmAdodptapet.getContentPane().add(lblNewLabel);
+		lblRegistrarse = new JLabel("¿No tienes cuenta? Registrate");
+		lblRegistrarse.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		lblRegistrarse.setBounds(274, 333, 216, 17);
+		frmLogin.getContentPane().add(lblRegistrarse);
 	}
 }

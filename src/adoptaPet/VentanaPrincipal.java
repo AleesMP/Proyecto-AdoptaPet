@@ -3,10 +3,11 @@ package adoptaPet;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import java.awt.Color;
 
 public class VentanaPrincipal {
 
-	public JFrame frame;
+	public JFrame frmAdoptapet;
 
 	/**
 	 * Launch the application.
@@ -16,7 +17,7 @@ public class VentanaPrincipal {
 			public void run() {
 				try {
 					VentanaPrincipal window = new VentanaPrincipal();
-					window.frame.setVisible(true);
+					window.frmAdoptapet.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,9 +36,11 @@ public class VentanaPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.getContentPane().setLayout(null);
+		frmAdoptapet = new JFrame();
+		frmAdoptapet.getContentPane().setBackground(new Color(204, 255, 204));
+		frmAdoptapet.setTitle("AdoptaPet");
+		frmAdoptapet.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmAdoptapet.getContentPane().setLayout(null);
 	}
 
 }
