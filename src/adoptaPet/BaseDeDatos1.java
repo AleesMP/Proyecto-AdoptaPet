@@ -1,6 +1,6 @@
 package adoptaPet;
 import java.sql.*;
-public class BaseDeDatos {
+public class BaseDeDatos1 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -10,6 +10,7 @@ public class BaseDeDatos {
 		String password="alumnoalumno";
 		String query="insert into Usuarios (Nombre,PrimerApellido,SegundoApellido,Correo,Edad) values ('Karen','Restrepo','Villegas','restrepo@gmail.com',20)";
 
+		/*
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
@@ -18,6 +19,26 @@ public class BaseDeDatos {
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		*/
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection=DriverManager.getConnection(url,user,password); 
+			Statement sentence=connection.createStatement();
+			ResultSet rs = sentence.executeQuery("select * from Usuarios"); 
+			
+			while (rs.next()) { 
+				System.out.println(rs.getString("Nombre") + " " + rs.getString(3)); 
+			} 
+			
+		}
+		
+		catch (Exception e) { 
+			
+			
+		}
+		
+		
 	}
 
 }

@@ -9,19 +9,31 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class RegistroUsuario {
 
 	public JFrame frmRegistrarse;
-	private JTextField txtNombre;
-	private JTextField txtCorreo;
-	private JTextField txtApellido1;
-	private JTextField txtApellido2;
-	private JTextField txtEdad;
+	private JTextField txtEmail;
 	private JButton btnConfirmar;
 	private JLabel lblRegistrarse;
 
+	//Base de datos
+	Connection connection;
+	String url="jdbc:mysql://localhost:33306/AdoptaPet"; 
+	String user="root";
+	String password="alumnoalumno";
+	private JTextField txtUser;
+	private JLabel lblPassword;
+	private JPasswordField txtPassword;
+	private JLabel lblName;
+	private JTextField txtName;
+	private JLabel lblSurname;
+	private JTextField textField;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -55,54 +67,15 @@ public class RegistroUsuario {
 		frmRegistrarse.setBounds(100, 100, 617, 436);
 		frmRegistrarse.getContentPane().setLayout(null);
 		
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblNombre.setBounds(180, 86, 64, 21);
-		frmRegistrarse.getContentPane().add(lblNombre);
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		lblEmail.setBounds(173, 129, 45, 21);
+		frmRegistrarse.getContentPane().add(lblEmail);
 		
-		txtNombre = new JTextField();
-		txtNombre.setBounds(245, 87, 221, 21);
-		frmRegistrarse.getContentPane().add(txtNombre);
-		txtNombre.setColumns(10);
-		
-		JLabel lblCorreo = new JLabel("Correo:");
-		lblCorreo.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblCorreo.setBounds(184, 230, 60, 21);
-		frmRegistrarse.getContentPane().add(lblCorreo);
-		
-		txtCorreo = new JTextField();
-		txtCorreo.setBounds(245, 230, 221, 21);
-		frmRegistrarse.getContentPane().add(txtCorreo);
-		txtCorreo.setColumns(10);
-		
-		JLabel lblEdad = new JLabel("Edad:");
-		lblEdad.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblEdad.setBounds(194, 274, 49, 21);
-		frmRegistrarse.getContentPane().add(lblEdad);
-		
-		JLabel lblApellido1 = new JLabel("Primer apellido:");
-		lblApellido1.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblApellido1.setBounds(125, 133, 119, 21);
-		frmRegistrarse.getContentPane().add(lblApellido1);
-		
-		txtApellido1 = new JTextField();
-		txtApellido1.setBounds(245, 134, 221, 21);
-		frmRegistrarse.getContentPane().add(txtApellido1);
-		txtApellido1.setColumns(10);
-		
-		JLabel lblApellido2 = new JLabel("Segundo Apellido:");
-		lblApellido2.setBounds(125, 186, 119, 21);
-		frmRegistrarse.getContentPane().add(lblApellido2);
-		
-		txtApellido2 = new JTextField();
-		txtApellido2.setBounds(245, 184, 221, 21);
-		frmRegistrarse.getContentPane().add(txtApellido2);
-		txtApellido2.setColumns(10);
-		
-		txtEdad = new JTextField();
-		txtEdad.setBounds(245, 274, 60, 21);
-		frmRegistrarse.getContentPane().add(txtEdad);
-		txtEdad.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setBounds(224, 129, 221, 21);
+		frmRegistrarse.getContentPane().add(txtEmail);
+		txtEmail.setColumns(10);
 		
 		btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -114,12 +87,53 @@ public class RegistroUsuario {
 		});
 		btnConfirmar.setBackground(Color.WHITE);
 		btnConfirmar.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		btnConfirmar.setBounds(245, 335, 119, 27);
+		btnConfirmar.setBounds(245, 297, 119, 27);
 		frmRegistrarse.getContentPane().add(btnConfirmar);
 		
 		lblRegistrarse = new JLabel("Registrarse");
 		lblRegistrarse.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblRegistrarse.setBounds(245, 40, 119, 17);
 		frmRegistrarse.getContentPane().add(lblRegistrarse);
+		
+		JLabel lblUser = new JLabel("Nick:");
+		lblUser.setBounds(188, 71, 30, 17);
+		frmRegistrarse.getContentPane().add(lblUser);
+		
+		txtUser = new JTextField();
+		txtUser.setBounds(224, 69, 221, 21);
+		frmRegistrarse.getContentPane().add(txtUser);
+		txtUser.setColumns(10);
+		
+		lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(158, 100, 60, 17);
+		frmRegistrarse.getContentPane().add(lblPassword);
+		
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(224, 98, 221, 21);
+		frmRegistrarse.getContentPane().add(txtPassword);
+		
+		lblName = new JLabel("Name:");
+		lblName.setBounds(158, 162, 39, 17);
+		frmRegistrarse.getContentPane().add(lblName);
+		
+		txtName = new JTextField();
+		txtName.setBounds(224, 162, 221, 21);
+		frmRegistrarse.getContentPane().add(txtName);
+		txtName.setColumns(10);
+		
+		lblSurname = new JLabel("Surname:");
+		lblSurname.setBounds(158, 203, 60, 17);
+		frmRegistrarse.getContentPane().add(lblSurname);
+		
+		textField = new JTextField();
+		textField.setBounds(224, 195, 221, 21);
+		frmRegistrarse.getContentPane().add(textField);
+		textField.setColumns(10);
+	}
+	
+	
+	public void AñadirUSuario (String nombre, String apellido1, String apellido2, String correo, String edad )
+	{
+		String query="insert into Usuarios (Nombre,PrimerApellido,SegundoApellido,Correo,Edad) values ('nombre','Restrepo','Villegas','restrepo@gmail.com',20)";
 	}
 }
