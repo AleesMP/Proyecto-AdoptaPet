@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -158,22 +160,44 @@ public class SignUp {
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				AddUser(txtNick.getText(), txtPassword.getText(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+				AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
 				
+				// Comprobacion de la contrasena
+				
+				if (txtPassword.getPassword().length<8) {
+						JOptionPane.showMessageDialog(frmRegistrarse,
+								"The password cannot be less than 8 characters long",
+								"Password warning",
+								JOptionPane.WARNING_MESSAGE);
+				}
+				
+				// Comprobacion email
+				else if (!txtEmail.getText().contains("@") || !txtEmail.getText().contains(".")) {
+					JOptionPane.showMessageDialog(frmRegistrarse,
+							"The syntax of email is wrong (correct syntax: example@gmail.com)",
+							"Email warning",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				
+				
+				
+
 			}
 		});
 		btnAccept.setBackground(Color.WHITE);
 		btnAccept.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		btnAccept.setBounds(243, 345, 119, 27);
-		frmRegistrarse.getContentPane().add(btnAccept);	
-	
+		frmRegistrarse.getContentPane().add(btnAccept);
+		
 	}
 	
 	
 	//Metodo para añadir usuario a la base de datos
-	public void AddUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
+	public void AddUser (String nick, char[] passwd, String email, String name, String surname1, String surname2 )
 	{
-		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwd +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
+		String passwdS = passwd.toString();
+		
+		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwdS +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
