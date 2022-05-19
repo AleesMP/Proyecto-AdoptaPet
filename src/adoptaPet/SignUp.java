@@ -26,19 +26,22 @@ public class SignUp {
 	private JButton btnAccept;
 	private JLabel lblSignUp;
 
-	//Base de datos
+
+	//Para conectarse a la base de datos 
 	Connection connection;
-	String url="jdbc:mysql://localhost:33306/AdoptaPet"; 
+	String url="jdbc:mysql://localhost:33306/AdoptaPet";
 	String user="root";
 	String password="alumnoalumno";
-	private JTextField txtUser;
+	
+	
+	private JTextField txtNick;
 	private JLabel lblPassword;
 	private JPasswordField txtPassword;
 	private JLabel lblName;
 	private JTextField txtName;
-	private JLabel lblSurname;
-	private JTextField txtSurname;
-	private JPanel panelPersonalInformation;
+	private JLabel lblSurname1;
+	private JTextField txtSurname1;
+	private JTextField txtSurname2;
 	
 	
 	/**
@@ -85,19 +88,6 @@ public class SignUp {
 		frmRegistrarse.getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		btnAccept = new JButton("Accept");
-		btnAccept.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-			}
-		});
-		btnAccept.setBackground(Color.WHITE);
-		btnAccept.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		btnAccept.setBounds(245, 337, 119, 27);
-		frmRegistrarse.getContentPane().add(btnAccept);
-		
 		lblSignUp = new JLabel("Sign Up");
 		lblSignUp.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblSignUp.setBounds(274, 34, 60, 17);
@@ -107,10 +97,10 @@ public class SignUp {
 		lblUser.setBounds(154, 96, 30, 17);
 		frmRegistrarse.getContentPane().add(lblUser);
 		
-		txtUser = new JTextField();
-		txtUser.setBounds(190, 94, 221, 21);
-		frmRegistrarse.getContentPane().add(txtUser);
-		txtUser.setColumns(10);
+		txtNick = new JTextField();
+		txtNick.setBounds(190, 94, 221, 21);
+		frmRegistrarse.getContentPane().add(txtNick);
+		txtNick.setColumns(10);
 		
 		lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(124, 125, 60, 17);
@@ -129,14 +119,25 @@ public class SignUp {
 		frmRegistrarse.getContentPane().add(txtName);
 		txtName.setColumns(10);
 		
-		lblSurname = new JLabel("Surname:");
-		lblSurname.setBounds(124, 269, 60, 17);
-		frmRegistrarse.getContentPane().add(lblSurname);
+		lblSurname1 = new JLabel("First surname:");
+		lblSurname1.setBounds(98, 269, 86, 17);
+		frmRegistrarse.getContentPane().add(lblSurname1);
 		
-		txtSurname = new JTextField();
-		txtSurname.setBounds(190, 267, 221, 21);
-		frmRegistrarse.getContentPane().add(txtSurname);
-		txtSurname.setColumns(10);
+		txtSurname1 = new JTextField();
+		txtSurname1.setBounds(190, 267, 221, 21);
+		frmRegistrarse.getContentPane().add(txtSurname1);
+		txtSurname1.setColumns(10);
+		
+		JLabel lblSurname2 = new JLabel("Second surname:");
+		lblSurname2.setBounds(82, 300, 102, 17);
+		frmRegistrarse.getContentPane().add(lblSurname2);
+		
+		txtSurname2 = new JTextField();
+		txtSurname2.setColumns(10);
+		txtSurname2.setBounds(190, 298, 221, 21);
+		frmRegistrarse.getContentPane().add(txtSurname2);
+		
+		
 		
 		JPanel panelUserInformation = new JPanel();
 		panelUserInformation.setForeground(Color.BLACK);
@@ -145,17 +146,43 @@ public class SignUp {
 		panelUserInformation.setBounds(48, 79, 513, 84);
 		frmRegistrarse.getContentPane().add(panelUserInformation);
 		
-		panelPersonalInformation = new JPanel();
+		JPanel panelPersonalInformation = new JPanel();
 		panelPersonalInformation.setForeground(Color.BLACK);
 		panelPersonalInformation.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Personal information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panelPersonalInformation.setBackground(new Color(162, 179, 139));
-		panelPersonalInformation.setBounds(48, 186, 513, 123);
+		panelPersonalInformation.setBounds(48, 186, 513, 147);
 		frmRegistrarse.getContentPane().add(panelPersonalInformation);
+		
+
+		btnAccept = new JButton("Accept");
+		btnAccept.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+				AddUser(txtNick.getText(), txtPassword.getText(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+				
+			}
+		});
+		btnAccept.setBackground(Color.WHITE);
+		btnAccept.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		btnAccept.setBounds(243, 345, 119, 27);
+		frmRegistrarse.getContentPane().add(btnAccept);	
+	
 	}
 	
 	
-	public void AñadirUSuario (String nombre, String apellido1, String apellido2, String correo, String edad )
+	//Metodo para añadir usuario a la base de datos
+	public void AddUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
 	{
+		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwd +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection=DriverManager.getConnection(url,user,password); 
+			Statement sentence=connection.createStatement();
+			sentence.execute(query); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
 		
+
 	}
 }

@@ -8,9 +8,9 @@ public class BaseDeDatos1 {
 		String url="jdbc:mysql://localhost:33306/AdoptaPet"; // test is the DB name
 		String user="root";
 		String password="alumnoalumno";
-		String query="insert into Usuarios (Nombre,PrimerApellido,SegundoApellido,Correo,Edad) values ('Karen','Restrepo','Villegas','restrepo@gmail.com',20)";
+		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('KarenLiz','opopo','restrepo@gmail.com','Karen','Restrepo','Villegas')";
 
-		/*
+		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
@@ -19,7 +19,7 @@ public class BaseDeDatos1 {
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
-		*/
+		/*
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -34,9 +34,8 @@ public class BaseDeDatos1 {
 		}
 		
 		catch (Exception e) { 
-			
-			
 		}
+		*/
 		
 		
 	}
