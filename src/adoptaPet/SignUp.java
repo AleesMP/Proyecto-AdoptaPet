@@ -161,8 +161,8 @@ public class SignUp {
 			public void actionPerformed(ActionEvent arg0) {
 			
 				//Convierto el array de char en String para poder pasarlo al metodo y tambien para poder convertirlo en Character y usar los metodos
-				String passwd = txtPassword.getPassword().toString();
-				Character passwdC=passwd.charAt(0); 
+				String passwd = txtPassword.getText().toString();
+				
 				
 				//contador para la contraseña
 				int digit=0;
@@ -173,7 +173,7 @@ public class SignUp {
 				boolean isCorrect=true;
 				
 				// Comprobacion de la contrasena
-				if (txtPassword.getPassword().length<8) {
+				if (txtPassword.getText().length()<8) {
 					JOptionPane.showMessageDialog(frmRegistrarse,
 							"The password cannot be less than 8 characters long",
 							"Password warning",
@@ -182,45 +182,42 @@ public class SignUp {
 				
 				for (int i=0; i<passwd.length(); i++)
 				{
-					if (passwdC.isDigit(i))
+					if (Character.isDigit(passwd.charAt(i)))
 					{
 						digit++;
 					}
-					else if (passwdC.isUpperCase(i))
+					else if (Character.isUpperCase(passwd.charAt(i)))
 					{
 						upperCase++;
 					}
-					else if (passwdC.isLowerCase(i))
+					else if (Character.isLowerCase(passwd.charAt(i)))
 					{
 						lowerCase++;
-					}
+					}		
 				}
 				
 				while (isCorrect)
 				{
-					if (digit<2 | upperCase<3 | lowerCase<3)
+					if (digit<2 || upperCase<3 || lowerCase<3)
 					{
 						JOptionPane.showMessageDialog(frmRegistrarse,
 								"The password must have a minimum of 2 digits, 3 lowercase letters and 3 uppercase letters.",
 								"Password warning",
 								JOptionPane.WARNING_MESSAGE);
-						
-						isCorrect=false;
 					}	
+					isCorrect=false;	
 				}
 
-
-				
-			
 				// Comprobacion email
-				/*else if (!txtEmail.getText().contains("@") || !txtEmail.getText().contains(".")) {
+				if (txtEmail.getText().indexOf("@")==-1 || txtEmail.getText().indexOf(".")==-1)		
+				{
 					JOptionPane.showMessageDialog(frmRegistrarse,
 							"The syntax of email is wrong (correct syntax: example@gmail.com)",
 							"Email warning",
-							JOptionPane.WARNING_MESSAGE);
-				}*/
+							JOptionPane.WARNING_MESSAGE);				
+				}	
 				
-				AddUser(txtNick.getText(), passwd, txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+				AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
 				
 
 			}
@@ -234,9 +231,11 @@ public class SignUp {
 	
 	
 	//Metodo para añadir usuario a la base de datos
-	public void AddUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
+	public void AddUser (String nick, char[] passwd, String email, String name, String surname1, String surname2 )
 	{	
-		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwd +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
+		
+		String passwdS =passwd.toString();
+		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwdS +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
