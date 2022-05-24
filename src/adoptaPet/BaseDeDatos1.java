@@ -29,7 +29,7 @@ public class BaseDeDatos1 {
 			ResultSet rs = sentence.executeQuery("select * from Usuarios"); 
 			
 			while (rs.next()) { 
-				System.out.println(rs.getString("Nombre") + " " + rs.getString(3)); 
+				System.out.println(rs.getString("user")); 
 			} 
 			
 		}

@@ -160,65 +160,36 @@ public class SignUp {
 			public void actionPerformed(ActionEvent arg0) {
 
 
-				// Comprobacion de la contrasena
-				//Convierto el array de char en String para poder pasarlo al metodo y tambien para poder convertirlo en Character y usar los metodos
-				String passwd = txtPassword.getText().toString();
-
-
-				//contador para la contraseña
-				int digit=0;
-				int upperCase=0;
-				int lowerCase=0;
-
-				//boolean para comprobar la contraseña
-				boolean isStrong=true;
-
-				if (txtPassword.getText().length()<8) {
-					JOptionPane.showMessageDialog(frmRegistrarse,
-							"The password cannot be less than 8 characters long",
-							"Password warning",
-							JOptionPane.WARNING_MESSAGE);
-				}
-
-				for (int i=0; i<passwd.length(); i++)
+				boolean check=false;
+				
+				//comprobar usuario y contraseña
+				while (!check)
 				{
-					if (Character.isDigit(passwd.charAt(i)))
-					{
-						digit++;
-					}
-					else if (Character.isUpperCase(passwd.charAt(i)))
-					{
-						upperCase++;
-					}
-					else if (Character.isLowerCase(passwd.charAt(i)))
-					{
-						lowerCase++;
-					}		
-				}
-
-				while (isStrong)
-				{
-					if (digit<2 || upperCase<3 || lowerCase<3)
+					if (checkUser(txtNick.getText()))
 					{
 						JOptionPane.showMessageDialog(frmRegistrarse,
-								"The password must have a minimum of 2 digits, 3 lowercase letters and 3 uppercase letters.",
-								"Password warning",
-								JOptionPane.WARNING_MESSAGE);
-					}	
-					isStrong=false;	
+								"The user "+txtNick.getText()+" already exists",
+								"User warning",
+								JOptionPane.WARNING_MESSAGE);	
+						check=true;
+					}
+					
+					if (!checkPassword(txtPassword.getText()))
+					{
+						check=true;
+					}
+					
+					if (!checkEmail())
+					{
+						check=true;
+					}					
 				}
 
-				// Comprobacion email
-				if (txtEmail.getText().indexOf("@")==-1 || txtEmail.getText().indexOf(".")==-1)		
+				if (!check)
 				{
-					JOptionPane.showMessageDialog(frmRegistrarse,
-							"The syntax of email is wrong (correct syntax: example@gmail.com)",
-							"Email warning",
-							JOptionPane.WARNING_MESSAGE);				
-				}	
-
-				AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
-
+					AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+				}
+				
 
 			}
 		});
@@ -247,19 +218,98 @@ public class SignUp {
 	}
 	
 	// Metodo para comprobar si el usuario esta en la BD
-	public void checkUser (String nick) {
-		try{
+	public boolean  checkUser (String nick) {
+		
+		boolean userExists=false;
+		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
 			Statement sentence=connection.createStatement();
 			ResultSet rs = sentence.executeQuery("select * from Usuarios"); 
 			
-			while (rs.next()){ 
-				System.out.println(rs.getString("Nombre") + " " + rs.getString(3)); 
-			} 		
+			while (rs.next() && !userExists) { 
+				String comprobarUsuarioExistente=rs.getString("user");
+				if (nick.equals(comprobarUsuarioExistente))
+				{
+					userExists=true;
+				}
+			} 	
 		}
-		catch (Exception e){ 
+		
+		catch (Exception e) { 
+		}	
+		return userExists;
+	}
+	
+	
+	public boolean checkPassword (String passwd)
+	{
+		//boolean para comprobar la contraseña
+		boolean isStrong=true;
+		
+		// Comprobacion de la contrasena
+		//Convierto el array de char en String para poder pasarlo al metodo y tambien para poder convertirlo en Character y usar los metodos
+		String passwdS = txtPassword.getText().toString();
+
+
+		//contador para la contraseña
+		int digit=0;
+		int upperCase=0;
+		int lowerCase=0;
+
+		if (txtPassword.getText().length()<8) {
+			JOptionPane.showMessageDialog(frmRegistrarse,
+					"The password cannot be less than 8 characters long",
+					"Password warning",
+					JOptionPane.WARNING_MESSAGE);
 		}
+
+		for (int i=0; i<passwdS.length(); i++)
+		{
+			if (Character.isDigit(passwdS.charAt(i)))
+			{
+				digit++;
+			}
+			else if (Character.isUpperCase(passwdS.charAt(i)))
+			{
+				upperCase++;
+			}
+			else if (Character.isLowerCase(passwdS.charAt(i)))
+			{
+				lowerCase++;
+			}		
+		}
+
+		while (isStrong)
+		{
+			if (digit<2 || upperCase<3 || lowerCase<3)
+			{
+				JOptionPane.showMessageDialog(frmRegistrarse,
+						"The password must have a minimum of 2 digits, 3 lowercase letters and 3 uppercase letters.",
+						"Password warning",
+						JOptionPane.WARNING_MESSAGE);
+			}	
+			isStrong=false;	
+		}
+		return isStrong;
+	}
+	
+	
+	
+	// metodo para comprobar el email
+	public boolean checkEmail()
+	{
+		boolean emailIsCorrect=true;
+		
+		if (txtEmail.getText().indexOf("@")==-1 || txtEmail.getText().indexOf(".")==-1)		
+		{
+			JOptionPane.showMessageDialog(frmRegistrarse,
+					"The syntax of email is wrong (correct syntax: example@gmail.com)",
+					"Email warning",
+					JOptionPane.WARNING_MESSAGE);			
+			emailIsCorrect=false;
+		}	
+		return emailIsCorrect;
 	}
 	
 	
