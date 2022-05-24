@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class MainWindow2 {
+public class MainWindow {
 
 	public JFrame frmAdoptapet;
 
@@ -23,7 +23,7 @@ public class MainWindow2 {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow2 window = new MainWindow2();
+					MainWindow window = new MainWindow();
 					window.frmAdoptapet.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +35,7 @@ public class MainWindow2 {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow2() {
+	public MainWindow() {
 		initialize();
 	}
 

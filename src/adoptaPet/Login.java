@@ -58,7 +58,7 @@ public class Login {
 		btnLogin.setBackground(Color.WHITE);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MainWindow2 Login= new MainWindow2();
+				MainWindow Login= new MainWindow();
 				Login.frmAdoptapet.setVisible(true);
 			}
 		});

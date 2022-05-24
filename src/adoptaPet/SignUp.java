@@ -159,37 +159,34 @@ public class SignUp {
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-
+System.out.println(txtPassword.getText());
 				boolean check=false;
 				
 				//comprobar usuario y contraseña
-				while (!check)
+				for (int i=0; i<1 && !check; i++)
 				{
-					if (checkUser(txtNick.getText()))
+					if (checkUser(txtNick.getText()) || checkPassword(txtPassword.getText()) || !checkEmail())
 					{
-						JOptionPane.showMessageDialog(frmRegistrarse,
-								"The user "+txtNick.getText()+" already exists",
-								"User warning",
-								JOptionPane.WARNING_MESSAGE);	
-						check=true;
+						check=false;
 					}
-					
-					if (!checkPassword(txtPassword.getText()))
+					else
 					{
 						check=true;
 					}
-					
-					if (!checkEmail())
-					{
-						check=true;
-					}					
 				}
 
-				if (!check)
+				if (check)
 				{
 					AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+					
+					txtNick.setText("");
+					txtPassword.setText("");
+					txtEmail.setText("");
+					txtName.setText("");
+					txtSurname1.setText("");
+					txtSurname2.setText("");
 				}
-				
+
 
 			}
 		});
@@ -231,6 +228,10 @@ public class SignUp {
 				String comprobarUsuarioExistente=rs.getString("user");
 				if (nick.equals(comprobarUsuarioExistente))
 				{
+					JOptionPane.showMessageDialog(frmRegistrarse,
+							"The user "+txtNick.getText()+" already exists",
+							"User warning",
+							JOptionPane.WARNING_MESSAGE);
 					userExists=true;
 				}
 			} 	
