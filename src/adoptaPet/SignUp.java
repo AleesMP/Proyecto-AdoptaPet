@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 
 
 
@@ -76,9 +77,15 @@ public class SignUp {
 		frmRegistrarse.setResizable(false);
 		frmRegistrarse.getContentPane().setBackground(new Color(250, 253, 214));
 		frmRegistrarse.setTitle("AdoptaPet");
-		frmRegistrarse.setBounds(100, 100, 617, 436);
+		frmRegistrarse.setBounds(100, 100, 617, 461);
 		frmRegistrarse.getContentPane().setLayout(null);
 
+		JLabel correct = new JLabel("");
+		correct.setHorizontalAlignment(SwingConstants.CENTER);
+		correct.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		correct.setBounds(194, 391, 221, 17);
+		frmRegistrarse.getContentPane().add(correct);
+		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblEmail.setBounds(139, 201, 45, 17);
@@ -138,8 +145,6 @@ public class SignUp {
 		txtSurname2.setBounds(190, 298, 221, 21);
 		frmRegistrarse.getContentPane().add(txtSurname2);
 
-
-
 		JPanel panelUserInformation = new JPanel();
 		panelUserInformation.setForeground(Color.BLACK);
 		panelUserInformation.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "User information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
@@ -159,13 +164,23 @@ public class SignUp {
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-System.out.println(txtPassword.getText());
 				boolean check=false;
 				
 				//comprobar usuario y contraseña
+				
+				boolean checkNameAndSurname=txtName.getText().equals("") || txtSurname1.getText().equals("") || txtSurname2.getText().equals("");
+				
+				if (checkNameAndSurname)
+				{
+					JOptionPane.showMessageDialog(frmRegistrarse,
+							"All the fields must be filled",
+							"Warning",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				
 				for (int i=0; i<1 && !check; i++)
 				{
-					if (checkUser(txtNick.getText()) || checkPassword(txtPassword.getText()) || !checkEmail())
+					if (checkUser(txtNick.getText()) || !checkPassword(txtPassword.getText()) || !checkEmail() || checkNameAndSurname)
 					{
 						check=false;
 					}
@@ -177,7 +192,7 @@ System.out.println(txtPassword.getText());
 
 				if (check)
 				{
-					AddUser(txtNick.getText(), txtPassword.getPassword(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+					AddUser(txtNick.getText(), txtPassword.getText(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
 					
 					txtNick.setText("");
 					txtPassword.setText("");
@@ -185,25 +200,27 @@ System.out.println(txtPassword.getText());
 					txtName.setText("");
 					txtSurname1.setText("");
 					txtSurname2.setText("");
+					
+					JOptionPane.showMessageDialog(
+							frmRegistrarse, "User registered succesfully", "Corect",
+						   	JOptionPane.INFORMATION_MESSAGE);
 				}
-
-
 			}
 		});
 		btnAccept.setBackground(Color.WHITE);
 		btnAccept.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		btnAccept.setBounds(243, 345, 119, 27);
+		btnAccept.setBounds(245, 352, 119, 27);
 		frmRegistrarse.getContentPane().add(btnAccept);
+	
 
 	}
 
 
 	//Metodo para añadir usuario a la base de datos
-	public void AddUser (String nick, char[] passwd, String email, String name, String surname1, String surname2 )
+	public void AddUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
 	{	
 
-		String passwdS=passwd.toString();
-		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwdS +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
+		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwd +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection=DriverManager.getConnection(url,user,password); 
@@ -280,8 +297,8 @@ System.out.println(txtPassword.getText());
 				lowerCase++;
 			}		
 		}
-
-		while (isStrong)
+		
+		for (int i=0; i<passwdS.length() && isStrong; i++)
 		{
 			if (digit<2 || upperCase<3 || lowerCase<3)
 			{
@@ -289,9 +306,10 @@ System.out.println(txtPassword.getText());
 						"The password must have a minimum of 2 digits, 3 lowercase letters and 3 uppercase letters.",
 						"Password warning",
 						JOptionPane.WARNING_MESSAGE);
+				isStrong=false;	
 			}	
-			isStrong=false;	
 		}
+		
 		return isStrong;
 	}
 	
@@ -312,6 +330,4 @@ System.out.println(txtPassword.getText());
 		}	
 		return emailIsCorrect;
 	}
-	
-	
 }
