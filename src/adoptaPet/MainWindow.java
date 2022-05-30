@@ -2,20 +2,33 @@ package adoptaPet;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class MainWindow {
 
-	public JFrame frmAdoptapet;
-
+	//Para conectarse a la base de datos 
+	Connection connection;
+	String url="jdbc:mysql://localhost:33306/AdoptaPet";
+	String user="root";
+	String password="alumnoalumno";
+	private JPasswordField txtPassword;
+	protected static PetsArrayList newPetArrayList= new PetsArrayList();
+	protected static JPanel panelAnimals = new JPanel();
+	protected ArrayList <JButton> botonesAnimales;
+	
+	public JFrame frame;
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +37,7 @@ public class MainWindow {
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
-					window.frmAdoptapet.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,19 +55,81 @@ public class MainWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	
 	private void initialize() {
-		frmAdoptapet = new JFrame();
-		frmAdoptapet.getContentPane().setBackground(new Color(250, 253, 214));
-		frmAdoptapet.getContentPane().setLayout(null);
 		
-		JButton btnAddPet = new JButton("Dar en adopcion");
-		btnAddPet.setBounds(31, 22, 131, 27);
-		frmAdoptapet.getContentPane().add(btnAddPet);
-		frmAdoptapet.setBackground(new Color(162, 179, 139));
-		frmAdoptapet.setBounds(100, 100, 1367, 1013);
-		frmAdoptapet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// frmAdoptapet.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame = new JFrame();
+		frame.setBounds(100, 100, 1066, 861);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(12, 0, 1034, 59);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JPanel panelAnimals = new JPanel();
+		panelAnimals.setBounds(12, 61, 1034, 755);
+		frame.getContentPane().add(panelAnimals);
+		panelAnimals.setLayout(new GridLayout(3, 6, 0, 0));
 
+		
+		//reccorer la base de datos
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection=DriverManager.getConnection(url,user,password); 
+			Statement sentence=connection.createStatement();
+			ResultSet rs = sentence.executeQuery("select * from Pets"); 
+
+			while (rs.next()) { 
+				String nameAnimal=rs.getString("nameAnimal");
+				String species=rs.getString("species");
+				String dateBirth=rs.getString("dateBirth");
+				String gender=rs.getString("gender");
+				String size=rs.getString("size");
+				String estadoAdopcion=rs.getString("estadoAdopcion");
+				
+				Pet newPet=new Pet(nameAnimal,species,dateBirth,gender,size,estadoAdopcion);
+				
+				newPetArrayList.addPetArrayList(newPet);
+				
+				System.out.println(newPetArrayList.size());
+			} 	
+		}
+
+		catch (Exception e) { 
+		}	
+		
+		updatePets();
+		
+		//boton para añadir animales
+		JButton btnAddPet = new JButton("Add Pet");
+		btnAddPet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				WindowAddPet w = new WindowAddPet();
+				w.frmAddPet.setVisible(true);
+				
+			
+				
+			}
+		});
+		btnAddPet.setBounds(12, 12, 105, 27);
+		panel.add(btnAddPet);	
 	}
+	
+	public void updatePets()
+	{
+		// creacion de un arrayList de botones creacion de botones para cada animal
+		botonesAnimales = new ArrayList <>(newPetArrayList.size());
+
+		//creamos tantos botones como mascotas hayan en la base de datos
+		for (int i=0; i<newPetArrayList.size(); i++)
+		{
+			botonesAnimales.add(new JButton("boton"+i));
+			botonesAnimales.get(i).setBounds(12, 61, 1034, 755);
+			panelAnimals.add(botonesAnimales.get(i));
+			panelAnimals.setVisible(true);
+		}
+	}
+	
 }

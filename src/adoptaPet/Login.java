@@ -113,8 +113,8 @@ public class Login {
 				
 				if (checkUserAndPassword(txtUser.getText(), txtPassword.getText()))
 				{
-					MainWindow Login= new MainWindow();
-					Login.frmAdoptapet.setVisible(true);
+					MainWindow mainwindow = new MainWindow();
+					mainwindow.frame.setVisible(true);
 				}
 				else
 				{
