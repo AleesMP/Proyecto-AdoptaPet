@@ -48,24 +48,13 @@ public class MainWindow {
 		frmAdoptapet.getContentPane().setBackground(new Color(250, 253, 214));
 		frmAdoptapet.getContentPane().setLayout(null);
 		
-		JButton btnFoto1 = new JButton("");
-		btnFoto1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Pet perro1=new Pet("Buff","Macho",3,"Grande");
-				
-			}
-		});
-		btnFoto1.setIcon(new ImageIcon("/media/karvil/KAREN/1 DAW/Proyecto final/proyectoJava/imagenes/foto1.jpg"));
-		btnFoto1.setBounds(12, 22, 232, 166);
-		frmAdoptapet.getContentPane().add(btnFoto1);
-		
-		JLabel lblNewLabel = new JLabel("Buff");
-		lblNewLabel.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(12, 200, 232, 17);
-		frmAdoptapet.getContentPane().add(lblNewLabel);
+		JButton btnAddPet = new JButton("Dar en adopcion");
+		btnAddPet.setBounds(31, 22, 131, 27);
+		frmAdoptapet.getContentPane().add(btnAddPet);
 		frmAdoptapet.setBackground(new Color(162, 179, 139));
-		frmAdoptapet.setBounds(100, 100, 959, 561);
+		frmAdoptapet.setBounds(100, 100, 1367, 1013);
 		frmAdoptapet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frmAdoptapet.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 	}
 }
