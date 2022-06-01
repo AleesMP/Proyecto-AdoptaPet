@@ -26,7 +26,7 @@ public class MainWindow {
 	private JPasswordField txtPassword;
 	protected static PetsArrayList newPetArrayList= new PetsArrayList();
 	protected static JPanel panelAnimals = new JPanel();
-	protected ArrayList <JButton> botonesAnimales;
+	protected static ArrayList <JButton> botonesAnimales;
 	
 	public JFrame frame;
 	/**
@@ -93,14 +93,26 @@ public class MainWindow {
 				newPetArrayList.addPetArrayList(newPet);
 				
 				System.out.println(newPetArrayList.size());
+				
 			} 	
 		}
 
 		catch (Exception e) { 
 		}	
 		
-		updatePets();
-		
+		// creacion de un arrayList de botones creacion de botones para cada animal
+		botonesAnimales = new ArrayList <>(newPetArrayList.size());
+				
+		//creamos tantos botones como mascotas hayan en la base de datos
+		for (int i=0; i<newPetArrayList.size(); i++)
+		{
+			JButton b=new JButton("boton"+i);
+			b.setBounds(12, 61, 1034, 755);
+			panelAnimals.add(b);
+			botonesAnimales.add(b);
+			panelAnimals.setVisible(true);
+		}
+
 		//boton para añadir animales
 		JButton btnAddPet = new JButton("Add Pet");
 		btnAddPet.addActionListener(new ActionListener() {
@@ -117,19 +129,21 @@ public class MainWindow {
 		panel.add(btnAddPet);	
 	}
 	
-	public void updatePets()
+	/*public void updatePets()
 	{
 		// creacion de un arrayList de botones creacion de botones para cada animal
 		botonesAnimales = new ArrayList <>(newPetArrayList.size());
-
+		
 		//creamos tantos botones como mascotas hayan en la base de datos
 		for (int i=0; i<newPetArrayList.size(); i++)
 		{
-			botonesAnimales.add(new JButton("boton"+i));
-			botonesAnimales.get(i).setBounds(12, 61, 1034, 755);
-			panelAnimals.add(botonesAnimales.get(i));
+			JButton b=new JButton("boton"+i);
+			b.setBounds(12, 61, 1034, 755);
+			panelAnimals.add(b);
+			botonesAnimales.add(b);
 			panelAnimals.setVisible(true);
+			System.out.println("DADDEDDD");
 		}
-	}
+	}*/
 	
 }
