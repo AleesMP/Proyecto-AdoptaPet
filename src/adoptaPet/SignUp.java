@@ -75,7 +75,7 @@ public class SignUp {
 	private void initialize() {
 		frmRegistrarse = new JFrame();
 		frmRegistrarse.setResizable(false);
-		frmRegistrarse.getContentPane().setBackground(new Color(250, 253, 214));
+		frmRegistrarse.getContentPane().setBackground(new Color(172, 209, 233));
 		frmRegistrarse.setTitle("AdoptaPet");
 		frmRegistrarse.setBounds(100, 100, 617, 461);
 		frmRegistrarse.getContentPane().setLayout(null);
@@ -87,7 +87,7 @@ public class SignUp {
 		frmRegistrarse.getContentPane().add(correct);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		lblEmail.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblEmail.setBounds(139, 201, 45, 17);
 		frmRegistrarse.getContentPane().add(lblEmail);
 
@@ -97,8 +97,8 @@ public class SignUp {
 		txtEmail.setColumns(10);
 
 		lblSignUp = new JLabel("Sign Up");
-		lblSignUp.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblSignUp.setBounds(274, 34, 60, 17);
+		lblSignUp.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 25));
+		lblSignUp.setBounds(234, 22, 141, 36);
 		frmRegistrarse.getContentPane().add(lblSignUp);
 
 		JLabel lblUser = new JLabel("User:");
@@ -148,14 +148,14 @@ public class SignUp {
 		JPanel panelUserInformation = new JPanel();
 		panelUserInformation.setForeground(Color.BLACK);
 		panelUserInformation.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "User information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panelUserInformation.setBackground(new Color(162, 179, 139));
+		panelUserInformation.setBackground(new Color(245, 250, 250));
 		panelUserInformation.setBounds(48, 79, 513, 84);
 		frmRegistrarse.getContentPane().add(panelUserInformation);
 
 		JPanel panelPersonalInformation = new JPanel();
 		panelPersonalInformation.setForeground(Color.BLACK);
 		panelPersonalInformation.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Personal information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
-		panelPersonalInformation.setBackground(new Color(162, 179, 139));
+		panelPersonalInformation.setBackground(new Color(245, 250, 250));
 		panelPersonalInformation.setBounds(48, 186, 513, 147);
 		frmRegistrarse.getContentPane().add(panelPersonalInformation);
 
@@ -192,7 +192,7 @@ public class SignUp {
 
 				if (check)
 				{
-					AddUser(txtNick.getText(), txtPassword.getText(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
+					addUser(txtNick.getText(), txtPassword.getText(), txtEmail.getText(), txtName.getText(), txtSurname1.getText(), txtSurname2.getText());
 					
 					txtNick.setText("");
 					txtPassword.setText("");
@@ -202,7 +202,7 @@ public class SignUp {
 					txtSurname2.setText("");
 					
 					JOptionPane.showMessageDialog(
-							frmRegistrarse, "User registered succesfully", "Corect",
+							frmRegistrarse, "User registered succesfully", "Correct",
 						   	JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
@@ -217,13 +217,13 @@ public class SignUp {
 
 
 	//Metodo para añadir usuario a la base de datos
-	public void AddUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
+	public void addUser (String nick, String passwd, String email, String name, String surname1, String surname2 )
 	{	
 
 		String query="insert into Usuarios (User,Passwd,Email,PersonalName,Surname1,Surname2) values ('"+ nick +"','"+ passwd +"','"+ email +"','"+ name +"','"+ surname1 +"','"+ surname2 +"')";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection=DriverManager.getConnection(url,user,password); 
+			connection=DriverManager.getConnection(url,user,password);
 			Statement sentence=connection.createStatement();
 			sentence.execute(query); 
 		} catch (Exception e) { 

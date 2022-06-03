@@ -1,41 +1,39 @@
 package adoptaPet;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JScrollBar;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+public class LoginF extends JFrame {
 
 
-// extends JFram
-public class Login{
-
-	public JFrame frmLogin;
+	private JPanel contentPane;
 	private JTextField txtUser;
 	private JButton btnSignUp;
 	private JLabel lblRegistrarse;
-
+	
 	//Para conectarse a la base de datos 
 	Connection connection;
 	String url="jdbc:mysql://localhost:33306/AdoptaPet";
 	String user="root";
 	String password="alumnoalumno";
 	private JPasswordField txtPassword;
-	
-	
 	
 	/**
 	 * Launch the application.
@@ -44,8 +42,8 @@ public class Login{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
-					window.frmLogin.setVisible(true);
+					LoginF frame = new LoginF();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,41 +52,35 @@ public class Login{
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public Login() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmLogin = new JFrame();
-		frmLogin.setResizable(false);
-		frmLogin.getContentPane().setBackground(new Color(172, 209, 233 ));
-		frmLogin.setTitle("AdodptaPet");
-		frmLogin.setBounds(100, 100, 695, 400);
-		frmLogin.getContentPane().setLayout(null);
-	
+	public LoginF() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		
 		txtUser = new JTextField();
 		txtUser.setBounds(226, 97, 203, 21);
-		frmLogin.getContentPane().add(txtUser);
+		this.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(226, 148, 203, 21);
-		frmLogin.getContentPane().add(txtPassword);
+		this.getContentPane().add(txtPassword);
 		
 		JLabel lblUser = new JLabel("User:");
 		lblUser.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblUser.setBounds(187, 99, 37, 17);
-		frmLogin.getContentPane().add(lblUser);
+		this.getContentPane().add(lblUser);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblPassword.setBounds(155, 150, 69, 17);
-		frmLogin.getContentPane().add(lblPassword);
+		this.getContentPane().add(lblPassword);
 		
 		btnSignUp = new JButton("Sign up");
 		btnSignUp.addActionListener(new ActionListener() {
@@ -100,12 +92,12 @@ public class Login{
 		btnSignUp.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		btnSignUp.setBackground(Color.WHITE);
 		btnSignUp.setBounds(496, 328, 134, 27);
-		frmLogin.getContentPane().add(btnSignUp);
+		this.getContentPane().add(btnSignUp);
 		
 		lblRegistrarse = new JLabel("You do not have an account?");
 		lblRegistrarse.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		lblRegistrarse.setBounds(274, 333, 216, 17);
-		frmLogin.getContentPane().add(lblRegistrarse);
+		this.getContentPane().add(lblRegistrarse);
 
 		
 		JButton btnLogin = new JButton("Login");
@@ -121,7 +113,7 @@ public class Login{
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(frmLogin,
+					JOptionPane.showMessageDialog(LoginF.this,
 							"The user "+txtUser.getText()+" or the password are not correct",
 							"User warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -129,7 +121,7 @@ public class Login{
 			}
 		});
 		btnLogin.setBounds(253, 197, 135, 27);
-		frmLogin.getContentPane().add(btnLogin);
+		this.getContentPane().add(btnLogin);
 			
 	}
 	
