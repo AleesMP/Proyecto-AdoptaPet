@@ -11,10 +11,17 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -42,7 +49,7 @@ public class WindowAddPet {
 	public static ImageIcon image;
 	static InputStream inputImage;
 	protected static Pet newPet;
-	private ImageIcon scaledPic;
+	protected ImageIcon scaledPic;
 
 	//Para conectarse a la base de datos 
 	Connection connection;
@@ -162,7 +169,25 @@ public class WindowAddPet {
                     ImageIcon image = new ImageIcon (fc.getSelectedFile().getAbsolutePath());
                     scaledPic = new ImageIcon(image.getImage().getScaledInstance(200,200,Image.SCALE_DEFAULT));
                     lblPhoto.setIcon(scaledPic);
+                    Path from = Paths.get(fc.getSelectedFile().getAbsolutePath());
+                    Path to = Paths.get("/media/karvil/KAREN/1DAW/Proyectofinal/proyectoJava/imagenes/foto2.jpg");
+                    CopyOption [] options = new CopyOption[] {
+                    		StandardCopyOption.REPLACE_EXISTING,
+                    		StandardCopyOption.COPY_ATTRIBUTES
+                    };
+                
+                    
+                    try {
+						Files.copy(from, to,options);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                    
+                    
                 }  
+                
+               
 			}
 		});
 		btnUpload.setBounds(403, 329, 144, 27);
@@ -228,8 +253,14 @@ public class WindowAddPet {
 				
 				
 				newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);
-				newPet.AddPetBaseDeDatos();
-
+				try {
+					newPet.AddPetBaseDeDatos();
+				} catch (IOException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				
 
 			}

@@ -1,15 +1,25 @@
 package adoptaPet;
 
-import java.awt.Image;
+import java.awt.*;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 
 public class Pet {
 
@@ -149,44 +159,81 @@ public class Pet {
 	public void setScaledPhoto(ImageIcon photo) {
 		this.scaledPhoto=new ImageIcon (photo.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 		//this.button.setIcon(scaledPhoto);
-	}*/
+	}
+	*/
 
-		//metodos para añadir un animal a la base de datos
-		public void AddPetBaseDeDatos(String name, String species, String dateBirth, String gender, String size, String estadoAopcion, ImageIcon scaledPhoto)
-		{	
-			
-		//	FileInputStream img = new FileInputStream(scaledPhoto); // guardar la etiqueta en una variable, hacerla estática y ponerla en el constructor 
-			String query="insert into Pets (nameAnimal,species,dateBirth,gender,size, estadoAdopcion) values ('"+ name +"','"+ species +"','"+ dateBirth +"','"+ gender +"','"+ size +"','"+ estadoAopcion +"')";
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				connection=DriverManager.getConnection(url,user,password); 
-				Statement sentence=connection.createStatement();
-				sentence.execute(query); 
-			} catch (Exception e) { 
-				e.printStackTrace();
-			}
+	//metodos para añadir un animal a la base de datos
+	public void AddPetBaseDeDatos() throws IOException, SerialException, SQLException
+	{	
+		//FileInputStream img = new FileInputStream("/media/karvil/KAREN/1DAW/Proyectofinal/proyectoJava/imagenes/foto2.jpg");
+		//Image image = Toolkit.getDefaultToolkit().getImage("/media/karvil/KAREN/1DAW/Proyectofinal/proyectoJava/imagenes/foto2.jpg");
+		//BufferedImage img= toBufferedImage(image);
 		
-			
-			
+		FileInputStream fis = null;
+		File img = new File("/media/karvil/KAREN/1DAW/Proyectofinal/proyectoJava/imagenes/foto2.jpg"); 
+		
+		fis = new FileInputStream(img);
+		byte b[] = new byte[(int)img.length()];
+		fis.read(b);
+		java.sql.Blob b2 = new SerialBlob(b);
+		 
+		
+		String query="insert into Pets (nameAnimal,species,dateBirth,gender,size, estadoAdopcion,image) values ('"+ name +"','"+ species +"','"+ dateBirth +"','"+ gender +"','"+ size +"','"+ estadoAopcion +"','"+ b2 +"')";
+		System.out.println(query);
+		
+		try 
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection=DriverManager.getConnection(url,user,password); 
+			PreparedStatement sentence=connection.prepareStatement(query);
+			//sentence.setBlob(1, b2);
+			sentence.execute(query); 
+		} 
+		catch (Exception e) 
+		{ 
+			e.printStackTrace();
 		}
+	}
 	
 	
+	public static BufferedImage toBufferedImage(Image image) {
+		if (image instanceof BufferedImage) {
+			return (BufferedImage)image;
+		}
+
+		// This code ensures that all the pixels in the image are loaded
+		image = new ImageIcon(image).getImage();
+
+		// Create a buffered image with a format that's compatible with the screen
+		BufferedImage bimage = null;
+
+		// Create a buffered image using the default color model
+		int type = BufferedImage.TYPE_3BYTE_BGR;
+		bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
+
+		return bimage;
+	}
+
+	/*
 		
 		public void AddPetBaseDeDatos()
 		{
 			String query="insert into Pets (nameAnimal,species,dateBirth,gender,size, estadoAdopcion) values ('"+ this.name +"','"+ this.species +"','"+ this.dateBirth +"','"+ this.gender +"','"+ this.size +"','"+ this.estadoAopcion +"')";
 			
-			try {
+			try 
+			{
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				connection=DriverManager.getConnection(url,user,password); 
 				Statement sentence=connection.createStatement();
 				sentence.execute(query); 
-			} catch (Exception e) { 
+			}
+			catch (Exception e) 
+			{ 
 				e.printStackTrace();
 			}
 		}
 		
-		
+	*/	
 		
 		//toString
 		@Override
