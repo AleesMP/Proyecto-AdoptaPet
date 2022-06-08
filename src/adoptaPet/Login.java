@@ -29,11 +29,12 @@ public class Login{
 	private JLabel lblRegistrarse;
 
 	//Para conectarse a la base de datos 
-	Connection connection;
-	String url="jdbc:mysql://localhost:33306/AdoptaPet";
-	String user="root";
-	String password="alumnoalumno";
+	static Connection connection;
+	static String url="jdbc:mysql://localhost:33306/AdoptaPet";
+	static String user="root";
+	static String password="alumnoalumno";
 	private JPasswordField txtPassword;
+	public static String userName;
 	
 	
 	
@@ -67,7 +68,7 @@ public class Login{
 		frmLogin = new JFrame();
 		frmLogin.setResizable(false);
 		frmLogin.getContentPane().setBackground(new Color(172, 209, 233 ));
-		frmLogin.setTitle("AdodptaPet");
+		frmLogin.setTitle("AdoptaPet");
 		frmLogin.setBounds(100, 100, 695, 400);
 		frmLogin.getContentPane().setLayout(null);
 	
@@ -75,6 +76,8 @@ public class Login{
 		txtUser.setBounds(226, 97, 203, 21);
 		frmLogin.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
+		
+		
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(226, 148, 203, 21);
@@ -113,19 +116,28 @@ public class Login{
 		btnLogin.setBackground(Color.WHITE);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (checkUserAndPassword(txtUser.getText(), txtPassword.getText()))
+				userName=txtUser.getText();
+				if(checkAdmin(txtUser.getText()))
 				{
-					MainWindow mainwindow = new MainWindow();
-					mainwindow.frame.setVisible(true);
+					Chat chatServer= new Chat();
+					chatServer.frame.setVisible(true);
+					System.out.println("holi");
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(frmLogin,
-							"The user "+txtUser.getText()+" or the password are not correct",
-							"User warning",
-							JOptionPane.WARNING_MESSAGE);
-				}			
+					if (checkUserAndPassword(txtUser.getText(), txtPassword.getText()))
+					{
+						MainWindow mainwindow = new MainWindow();
+						mainwindow.frame.setVisible(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(frmLogin,
+								"The user "+txtUser.getText()+" or the password are not correct",
+								"User warning",
+								JOptionPane.WARNING_MESSAGE);
+					}
+				}	
 			}
 		});
 		btnLogin.setBounds(253, 197, 135, 27);
@@ -143,9 +155,9 @@ public class Login{
 			ResultSet rs = sentence.executeQuery("select * from Usuarios"); 
 
 			while (rs.next() && !userExists) { 
-				String comprobarUsuarioExistente=rs.getString("user");
-				String comprobarContraseñaExistente=rs.getString("passwd");
-				if (nick.equals(comprobarUsuarioExistente) && passwd.equals(comprobarContraseñaExistente))
+				String comprobarUsuarioExistente=rs.getString("userName");
+				String comprobarContrasenaExistente=rs.getString("passwd");
+				if (nick.equals(comprobarUsuarioExistente) && passwd.equals(comprobarContrasenaExistente))
 				{
 					userExists=true;
 				}
@@ -156,4 +168,30 @@ public class Login{
 		}	
 		return userExists;
 	}
+	
+	public static boolean checkAdmin(String userName)
+	{
+		boolean userAdmin=false;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection=DriverManager.getConnection(url,user,password); 
+			Statement sentence=connection.createStatement();
+			ResultSet rs = sentence.executeQuery("select administrador from Usuarios where UserName='"+userName+"'"); 
+
+			while (rs.next()) { 
+				String checkUserAdmin=rs.getString("administrador");
+				System.out.println(checkUserAdmin);
+				if (checkUserAdmin.equals("1"))
+				{
+					userAdmin=true;
+				}
+			} 	
+		}
+
+		catch (Exception e) { 
+		}	
+		
+		return userAdmin;
+	}
+	
 }

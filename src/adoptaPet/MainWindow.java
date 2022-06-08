@@ -182,6 +182,12 @@ public class MainWindow {
 		panel.add(btnAddPet);
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Chat chatClient= new Chat();
+				chatClient.frame.setVisible(true);
+			}
+		});
 		btnHelp.setBackground(Color.WHITE);
 		btnHelp.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
 		btnHelp.setBounds(917, 12, 105, 27);

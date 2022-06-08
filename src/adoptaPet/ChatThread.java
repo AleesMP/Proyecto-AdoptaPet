@@ -6,18 +6,18 @@ import java.io.IOException;
 import javax.swing.JTextArea;
 
 public class ChatThread extends Thread {
-	BufferedReader inputClient;
+	BufferedReader input;
 	JTextArea chatArea;
 
-	public ChatThread(BufferedReader inputClient,JTextArea chatArea) {
-		this.inputClient = inputClient;
+	public ChatThread(BufferedReader input,JTextArea chatArea) {
+		this.input = input;
 		this.chatArea = chatArea;
 	}
 
 	public void run() {
 		while (true) {
 			try {
-				chatArea.append("\n" + inputClient.readLine());
+				chatArea.append("\n" + input.readLine());
 			}
 
 			catch (IOException e) {
