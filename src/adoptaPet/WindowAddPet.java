@@ -6,6 +6,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -168,6 +169,7 @@ public class WindowAddPet {
                 if (sele == JFileChooser.APPROVE_OPTION){
                     ImageIcon image = new ImageIcon (fc.getSelectedFile().getAbsolutePath());
                     scaledPic = new ImageIcon(image.getImage().getScaledInstance(200,200,Image.SCALE_DEFAULT));
+                    lblPhoto.setText("");
                     lblPhoto.setIcon(scaledPic);
                     Path from = Paths.get(fc.getSelectedFile().getAbsolutePath());
                     Path to = Paths.get("/media/karvil/KAREN/1DAW/Proyectofinal/proyectoJava/imagenes/foto2.jpg");
@@ -244,24 +246,35 @@ public class WindowAddPet {
 					txtEstadoAdopcion="In adoption";
 				}
 				
+				boolean infoCheck=true;
 				
 				///////////////ME HE QUEDADO AQUí
-				if (txtName.getText().equals("") ||txtName.getText().equals("") || txtName.getText().equals("") || txtName.getText().equals(""))
+				if (txtName.getText().equals("") ||txtSpecies.getText().equals("") || txtDate.getText().equals(""))
 				{
-					
+					JOptionPane.showMessageDialog(frmAddPet,
+							"Information cannot be empty",
+							"Information warning",
+							JOptionPane.WARNING_MESSAGE);
+							infoCheck=false;
 				}
 				
-				
-				newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);
-				try {
-					newPet.AddPetBaseDeDatos();
-				} catch (IOException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (infoCheck)
+				{
+					newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);
+					JOptionPane.showMessageDialog(
+							frmAddPet, "Correctly registered", "Information",
+							JOptionPane.INFORMATION_MESSAGE);
+					try {
+						newPet.AddPetBaseDeDatos();
+					} catch (IOException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				
-				
-				
+				txtName.setText("");
+				txtSpecies.setText("");
+				txtDate.setText("");
+			
 
 			}
 		});
@@ -273,8 +286,6 @@ public class WindowAddPet {
 		lblPhoto.setBackground(Color.WHITE);
 		lblPhoto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPhoto.setBounds(357, 67, 250, 250);
-		frmAddPet.getContentPane().add(lblPhoto);
-		
-		
+		frmAddPet.getContentPane().add(lblPhoto);		
 	}
 }
