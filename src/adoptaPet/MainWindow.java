@@ -79,6 +79,7 @@ public class MainWindow {
 		frame.getContentPane().setBackground(new Color(172, 209, 233 ));
 		frame.setBounds(100, 100, 1066, 861);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color( 245, 250, 250));
@@ -135,15 +136,20 @@ public class MainWindow {
         //creamos tantos botones como mascotas hayan en la base de datos
         for (int i=0; i<newPetArrayList.size(); i++)
         {
-        	JButton b=new JButton(i+"");       
+        	JButton b=new JButton("");       
         	b.setBounds(12, 61, 1034, 755);
-        	b.setName(newPetArrayList.get(i).getName());
+        	b.setName(i+"");
+        	b.setText(newPetArrayList.get(i).getName());
+    		b.setBackground(Color.WHITE);
         	b.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			PetInformation window = new PetInformation();
     			window.frame.setVisible(true);
     			System.out.println(arg0);
-    			int n=Integer.valueOf(arg0.getActionCommand());
+    			JButton b1 = (JButton) arg0.getSource();
+    		
+    			System.out.println(b1.getName());
+    			int n=Integer.valueOf(b1.getName());
     			
     			PetInformation.namePet.setText(newPetArrayList.get(n).getName());
     			PetInformation.dateOfBirth.setText(newPetArrayList.get(n).getDateBirth());
@@ -151,7 +157,7 @@ public class MainWindow {
     			PetInformation.gender.setText(newPetArrayList.get(n).getGender());
     			PetInformation.species.setText(newPetArrayList.get(n).getSpecies());
     			PetInformation.size.setText(newPetArrayList.get(n).getSize());
-    				
+    			
     			}
     		});
         	panelAnimals.add(b);
@@ -168,12 +174,12 @@ public class MainWindow {
 		btnAddPet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				/*
-				frame.dispose();
+				
+				//frame.dispose();
 				WindowAddPet w = new WindowAddPet();
 				w.frmAddPet.setVisible(true);
 				
-				*/
+				
 				
 				
 			}

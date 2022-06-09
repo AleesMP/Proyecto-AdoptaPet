@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class PetInformation{
 
@@ -62,40 +63,41 @@ public class PetInformation{
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(172, 209, 233));
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JLabel lblYouPet = new JLabel("YOUR PET");
 		lblYouPet.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 25));
-		lblYouPet.setBounds(305, 12, 156, 32);
+		lblYouPet.setBounds(168, 25, 156, 32);
 		frame.getContentPane().add(lblYouPet);
 		
 		JLabel lblNamePet = new JLabel("Name Pet:");
 		lblNamePet.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblNamePet.setBounds(12, 87, 81, 17);
+		lblNamePet.setBounds(80, 87, 81, 17);
 		frame.getContentPane().add(lblNamePet);
 		
 		JLabel lblSpecies = new JLabel("Species");
 		lblSpecies.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblSpecies.setBounds(12, 123, 60, 17);
+		lblSpecies.setBounds(80, 123, 60, 17);
 		frame.getContentPane().add(lblSpecies);
 		
 		JLabel lblDateOfBirth = new JLabel("Date of birth:");
 		lblDateOfBirth.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblDateOfBirth.setBounds(12, 161, 95, 17);
+		lblDateOfBirth.setBounds(80, 161, 95, 17);
 		frame.getContentPane().add(lblDateOfBirth);
 		
 		JLabel lblGender = new JLabel("Gender:");
 		lblGender.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblGender.setBounds(12, 202, 60, 17);
+		lblGender.setBounds(80, 202, 60, 17);
 		frame.getContentPane().add(lblGender);
 		
 		JLabel lblSize = new JLabel("Size:");
 		lblSize.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblSize.setBounds(12, 240, 60, 17);
+		lblSize.setBounds(80, 240, 60, 17);
 		frame.getContentPane().add(lblSize);
 		
 		JLabel lblAdoptionStatus = new JLabel("Adoption status:");
 		lblAdoptionStatus.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
-		lblAdoptionStatus.setBounds(12, 280, 125, 17);
+		lblAdoptionStatus.setBounds(80, 280, 125, 17);
 		frame.getContentPane().add(lblAdoptionStatus);
 		
 		JLabel lblPhoto = new JLabel("");
@@ -103,84 +105,39 @@ public class PetInformation{
 		frame.getContentPane().add(lblPhoto);
 		
 		adoptionStatus = new JLabel("");
-		adoptionStatus.setBounds(165, 280, 156, 17);
+		adoptionStatus.setBounds(233, 280, 156, 17);
 		frame.getContentPane().add(adoptionStatus);
 		
 		size = new JLabel("");
-		size.setBounds(165, 240, 156, 17);
+		size.setBounds(233, 240, 156, 17);
 		frame.getContentPane().add(size);
 		
 		gender = new JLabel("");
-		gender.setBounds(165, 202, 156, 17);
+		gender.setBounds(233, 202, 156, 17);
 		frame.getContentPane().add(gender);
 		
 		dateOfBirth = new JLabel("");
-		dateOfBirth.setBounds(165, 161, 156, 17);
+		dateOfBirth.setBounds(233, 161, 156, 17);
 		frame.getContentPane().add(dateOfBirth);
 		
 		species = new JLabel("");
-		species.setBounds(165, 123, 156, 17);
+		species.setBounds(233, 123, 156, 17);
 		frame.getContentPane().add(species);
 		
 		namePet = new JLabel("");
-		namePet.setBounds(165, 87, 156, 17);
+		namePet.setBounds(233, 87, 156, 17);
 		frame.getContentPane().add(namePet);
-		frame.setBounds(100, 100, 775, 590);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(245, 250, 250));
+		panel.setBounds(45, 71, 401, 245);
+		frame.getContentPane().add(panel);
+		frame.setBounds(100, 100, 500, 380);
 		
 		
 		
 		
-	/*
-		//reccorer la base de datos
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection=DriverManager.getConnection(url,user,password); 
-			Statement sentence=connection.createStatement();
-			ResultSet rs = sentence.executeQuery("select * from Pets"); 
-
-			while (rs.next()) { 
-				String nameAnimal=rs.getString("nameAnimal");
-				String speciesS=rs.getString("species");
-				String dateBirth=rs.getString("dateBirth");
-				String genderS=rs.getString("gender");
-				String sizeS=rs.getString("size");
-				String estadoAdopcion=rs.getString("estadoAdopcion");
-
-				Pet newPet=new Pet(nameAnimal,speciesS,dateBirth,genderS,sizeS,estadoAdopcion);
-				
-				newPetArrayList.add(newPet);
-
-				System.out.println(newPetArrayList.size());
-
-			} 	
-		}
-
-		catch (Exception e) { 
-		}			
 	
-		for (int i=0; i<newPetArrayList.size(); i++)
-		{
-		
-				namePet.setText(newPetArrayList.get(i).getName());
-			
-				species.setText(newPetArrayList.get(i).getSpecies());
-		
-				dateOfBirth.setText(newPetArrayList.get(i).getDateBirth());
-			
-				gender.setText(newPetArrayList.get(i).getGender());
-			
-				size.setText(newPetArrayList.get(i).getSize());
-			
-				adoptionStatus.setText(newPetArrayList.get(i).getEstadoAdopcion());	
-		}
- 	
-	}
-	
-	public static void showInformation(String nameAnimal,String species, String dateBirth,String gender, String size, String estadoAdopcion)
-	{
-		Pet newPet=new Pet(nameAnimal,species,dateBirth,gender,size,estadoAdopcion);
-		newPetArrayList.add(newPet);
-	}*/
 	
 }
 

@@ -21,6 +21,7 @@ import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class Chat {
 
@@ -63,9 +64,11 @@ public class Chat {
 	private void initialize() {
 		user = JOptionPane.showInputDialog(frame,"Introduce your user");
 		frame = new JFrame();
-		frame.setBounds(100, 100, 790, 584);
+		frame.getContentPane().setBackground(new Color(172, 209, 233));
+		frame.setBounds(100, 100, 641, 549);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		
 
 		chatArea = new JTextArea();
@@ -89,17 +92,19 @@ public class Chat {
 				}
 			}
 		});
-		txtMsg.setBounds(12, 487, 609, 21);
+		txtMsg.setBounds(12, 472, 492, 21);
 		frame.getContentPane().add(txtMsg);
 		txtMsg.setColumns(10);
 		
 		JButton btnSend = new JButton("Send");
+		btnSend.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 12));
+		btnSend.setBackground(Color.WHITE);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				sendMessage();
 			}
 		});
-		btnSend.setBounds(665, 484, 105, 27);
+		btnSend.setBounds(516, 469, 105, 27);
 		frame.getContentPane().add(btnSend);
 		
 		if(Login.checkAdmin(Login.userName))

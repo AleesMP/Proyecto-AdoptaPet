@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -51,7 +52,9 @@ public class WindowAddPet {
 	static InputStream inputImage;
 	protected static Pet newPet;
 	protected ImageIcon scaledPic;
-
+	protected MainWindow windowUpdate = new MainWindow();
+	protected JPanel panelUpdate = new JPanel();
+	
 	//Para conectarse a la base de datos 
 	Connection connection;
 	String url="jdbc:mysql://localhost:33306/AdoptaPet";
@@ -260,7 +263,7 @@ public class WindowAddPet {
 				
 				if (infoCheck)
 				{
-					newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);
+					newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);				
 					JOptionPane.showMessageDialog(
 							frmAddPet, "Correctly registered", "Information",
 							JOptionPane.INFORMATION_MESSAGE);

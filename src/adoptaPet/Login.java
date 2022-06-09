@@ -71,6 +71,7 @@ public class Login{
 		frmLogin.setTitle("AdoptaPet");
 		frmLogin.setBounds(100, 100, 695, 400);
 		frmLogin.getContentPane().setLayout(null);
+		frmLogin.setResizable(false);
 	
 		txtUser = new JTextField();
 		txtUser.setBounds(226, 97, 203, 21);
