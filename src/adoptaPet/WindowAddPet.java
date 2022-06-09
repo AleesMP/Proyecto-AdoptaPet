@@ -52,8 +52,9 @@ public class WindowAddPet {
 	static InputStream inputImage;
 	protected static Pet newPet;
 	protected ImageIcon scaledPic;
-	protected MainWindow windowUpdate = new MainWindow();
-	protected JPanel panelUpdate = new JPanel();
+	protected ArrayList<Pet> updateNewPetArrayList = new ArrayList<Pet>();
+	protected JPanel updatePanelAnimals = new JPanel();
+	protected ArrayList <JButton> updateBotonesAnimales = new ArrayList <>();
 	
 	//Para conectarse a la base de datos 
 	Connection connection;
@@ -63,6 +64,7 @@ public class WindowAddPet {
 	
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -79,13 +81,22 @@ public class WindowAddPet {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public WindowAddPet() {
+	public WindowAddPet()
+	{
+		
+	}
+	public WindowAddPet(ArrayList<Pet> updateNewPetArrayList, JPanel updatePanelAnimals, ArrayList <JButton> updateBotonesAnimales) {
+		this.updateNewPetArrayList=updateNewPetArrayList;
+		this.updatePanelAnimals=updatePanelAnimals;
+		this.updateBotonesAnimales=updateBotonesAnimales;
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		frmAddPet = new JFrame();
@@ -264,6 +275,38 @@ public class WindowAddPet {
 				if (infoCheck)
 				{
 					newPet = new Pet(txtName.getText(), txtSpecies.getText(), txtDate.getText(), txtGender, txtSize, txtEstadoAdopcion);				
+					updateNewPetArrayList.add(newPet);
+					JButton updateButton = new JButton();
+					updateButton.setText(txtName.getText());
+					updateButton.setName(updateBotonesAnimales.size()+"");
+					updateButton.setBackground(Color.WHITE);
+					updateButton.addActionListener(new ActionListener() {
+		    		public void actionPerformed(ActionEvent arg0) {
+		    			PetInformation window = new PetInformation();
+		    			window.frame.setVisible(true);
+		    			System.out.println(arg0);
+		    			JButton b1 = (JButton) arg0.getSource();
+		    		
+		    			System.out.println(b1.getName());
+		    			int n=Integer.valueOf(b1.getName());
+		    			
+		    			PetInformation.namePet.setText(updateNewPetArrayList.get(n).getName());
+		    			PetInformation.dateOfBirth.setText(updateNewPetArrayList.get(n).getDateBirth());
+		    			PetInformation.adoptionStatus.setText(updateNewPetArrayList.get(n).getEstadoAdopcion());
+		    			PetInformation.gender.setText(updateNewPetArrayList.get(n).getGender());
+		    			PetInformation.species.setText(updateNewPetArrayList.get(n).getSpecies());
+		    			PetInformation.size.setText(updateNewPetArrayList.get(n).getSize());
+		    			
+		    			}
+		    		});
+					
+					updatePanelAnimals.add(updateButton);
+					updateBotonesAnimales.add(updateButton);
+					updatePanelAnimals.repaint();
+					updatePanelAnimals.updateUI();
+				
+					
+					
 					JOptionPane.showMessageDialog(
 							frmAddPet, "Correctly registered", "Information",
 							JOptionPane.INFORMATION_MESSAGE);

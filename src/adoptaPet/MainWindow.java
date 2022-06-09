@@ -176,7 +176,7 @@ public class MainWindow {
 				
 				
 				//frame.dispose();
-				WindowAddPet w = new WindowAddPet();
+				WindowAddPet w = new WindowAddPet(newPetArrayList, panelAnimals, botonesAnimales);
 				w.frmAddPet.setVisible(true);
 				
 				

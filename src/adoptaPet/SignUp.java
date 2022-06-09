@@ -242,7 +242,7 @@ public class SignUp {
 			ResultSet rs = sentence.executeQuery("select * from Usuarios"); 
 			
 			while (rs.next() && !userExists) { 
-				String comprobarUsuarioExistente=rs.getString("user");
+				String comprobarUsuarioExistente=rs.getString("UserName");
 				if (nick.equals(comprobarUsuarioExistente))
 				{
 					JOptionPane.showMessageDialog(frmRegistrarse,
