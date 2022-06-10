@@ -62,12 +62,13 @@ public class Chat {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		user = JOptionPane.showInputDialog(frame,"Introduce your user");
+		//user = JOptionPane.showInputDialog(frame,"Introduce your user");
+		user = Login.txtUser.getText();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(172, 209, 233));
 		frame.setBounds(100, 100, 641, 549);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		
 
@@ -131,7 +132,8 @@ public class Chat {
 		}
 		else
 		{
-			final String SERVER = JOptionPane.showInputDialog(frame,"Introduce the IP you want to connect to");
+			//final String SERVER = JOptionPane.showInputDialog(frame,"Introduce the IP you want to connect to","localHost");
+			final String SERVER = "localHost";
 			try {
 				chatArea.append("Client started"); 
 	            socket = new Socket(SERVER, PORT);

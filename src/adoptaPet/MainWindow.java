@@ -80,6 +80,7 @@ public class MainWindow {
 		frame.setBounds(100, 100, 1066, 861);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color( 245, 250, 250));
@@ -136,7 +137,8 @@ public class MainWindow {
         //creamos tantos botones como mascotas hayan en la base de datos
         for (int i=0; i<newPetArrayList.size(); i++)
         {
-        	JButton b=new JButton("");       
+        	JButton b=new JButton("");     
+        	b.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 25));
         	b.setBounds(12, 61, 1034, 755);
         	b.setName(i+"");
         	b.setText(newPetArrayList.get(i).getName());

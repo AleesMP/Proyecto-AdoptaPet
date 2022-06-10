@@ -24,7 +24,7 @@ import javax.swing.ImageIcon;
 public class Login{
 
 	public JFrame frmLogin;
-	private JTextField txtUser;
+	protected static JTextField txtUser;
 	private JButton btnSignUp;
 	private JLabel lblRegistrarse;
 
@@ -71,6 +71,7 @@ public class Login{
 		frmLogin.setTitle("AdoptaPet");
 		frmLogin.setBounds(100, 100, 695, 400);
 		frmLogin.getContentPane().setLayout(null);
+		frmLogin.setLocationRelativeTo(null);
 		frmLogin.setResizable(false);
 	
 		txtUser = new JTextField();

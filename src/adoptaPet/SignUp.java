@@ -79,6 +79,8 @@ public class SignUp {
 		frmRegistrarse.setTitle("AdoptaPet");
 		frmRegistrarse.setBounds(100, 100, 617, 461);
 		frmRegistrarse.getContentPane().setLayout(null);
+		frmRegistrarse.setLocationRelativeTo(null);
+		frmRegistrarse.setResizable(false);
 
 		JLabel correct = new JLabel("");
 		correct.setHorizontalAlignment(SwingConstants.CENTER);

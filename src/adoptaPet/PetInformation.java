@@ -64,6 +64,7 @@ public class PetInformation{
 		frame.getContentPane().setBackground(new Color(172, 209, 233));
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
 		
 		JLabel lblYouPet = new JLabel("YOUR PET");
 		lblYouPet.setFont(new Font("Bitstream Vera Serif", Font.BOLD, 25));
